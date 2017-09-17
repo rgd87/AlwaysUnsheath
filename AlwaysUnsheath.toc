@@ -1,0 +1,5 @@
+## Interface: 73000
+## Title: AlwaysUnsheath
+## Author: d87
+## Notes: Keep monk melee weapons unsheathed
+unsheath.lua
