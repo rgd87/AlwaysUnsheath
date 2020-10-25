@@ -4,4 +4,7 @@
 ## SavedVariables: AutoUnsheathDB
 ## Version: @project-version@
 ## Notes: Keep monk melee weapons unsheathed
+
+## X-WoWI-ID: 25749
+
 unsheath.lua
