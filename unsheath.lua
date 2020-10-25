@@ -27,6 +27,9 @@ function f:PLAYER_LOGIN(event)
             InterfaceOptions_AddCategory(f.optionsPanel);
         end
     end)
+
+    SLASH_AUTOUNSHEATH1= "/autounsheath"
+    SlashCmdList["AUTOUNSHEATH"] = f.ConsoleToggle
 end
 
 f:RegisterEvent("PLAYER_LOGOUT")
@@ -84,6 +87,17 @@ function f:Disable()
         ticker:Cancel()
         ticker = nil
     end
+end
+
+function f:ToggleForSpec(specIndex)
+    local db = AutoUnsheathDB
+    db[playerClass] = db[playerClass] or {}
+    db[playerClass][specIndex] = not db[playerClass][specIndex]
+    f:ReconfTicker()
+end
+function f.ConsoleToggle()
+    local spec = GetSpecialization()
+    f:ToggleForSpec(spec)
 end
 
 
@@ -147,11 +161,7 @@ function f:CreateGUI(name, parent)
         cb:SetPoint("TOPLEFT", 35, -10 - (specIndex*30))
         cb.specID = specIndex
         cb:SetScript("OnClick",function(self,button)
-            local db = AutoUnsheathDB
-            local specIndex = self.specID
-            db[playerClass] = db[playerClass] or {}
-            db[playerClass][specIndex] = not db[playerClass][specIndex]
-            f:ReconfTicker()
+            f:ToggleForSpec(self.specID)
         end)
 
         table.insert(content.specCheckBoxes, cb)

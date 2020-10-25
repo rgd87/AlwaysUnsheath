@@ -93,6 +93,7 @@ globals = {
     "LibStub",
     "CreateFrame",
     "UIParent",
+    "SlashCmdList",
 
     "UnitClass",
     "InterfaceOptionsFrame",
