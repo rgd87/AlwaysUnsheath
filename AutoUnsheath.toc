@@ -1,0 +1,7 @@
+## Interface: 90001
+## Title: AutoUnsheath
+## Author: d87
+## SavedVariables: AutoUnsheathDB
+## Version: @project-version@
+## Notes: Keep monk melee weapons unsheathed
+unsheath.lua

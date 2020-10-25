@@ -1,0 +1,4 @@
+package-as: AutoUnsheath
+
+enable-nolib-creation: no
+
