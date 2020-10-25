@@ -6,7 +6,12 @@ f:SetScript("OnEvent", function(self, event, ...)
 end)
 
 local ticker
-local _, playerClass = UnitClass("player")
+-- local _, playerClass = UnitClass("player")
+
+local realmKey = GetRealmName()
+local charKey = UnitName("player") .. " - " .. realmKey
+local playerClass = charKey
+
 local defaults = {
 }
 

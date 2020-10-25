@@ -106,4 +106,6 @@ globals = {
     "GetNumSpecializations",
     "GetSpecializationInfo",
     "CopyTable",
+    "GetRealmName",
+    "UnitName",
 }
