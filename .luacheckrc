@@ -108,4 +108,6 @@ globals = {
     "CopyTable",
     "GetRealmName",
     "UnitName",
+    "IsMounted",
+    "IsFlying",
 }

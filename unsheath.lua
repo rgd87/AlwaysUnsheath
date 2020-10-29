@@ -43,15 +43,17 @@ function f:PLAYER_LOGOUT(event)
 end
 
 
-
+local forceToggle = false
 local unsheath = function()
-    if GetSheathState() ~= 2 then
+    if GetSheathState() ~= 2 or forceToggle then
+        forceToggle = false
         ToggleSheath()
     end
 end
 
 
 
+f.PLAYER_STARTED_MOVING = unsheath
 f.MERCHANT_CLOSED = unsheath
 f.LOOT_CLOSED = unsheath
 
@@ -74,11 +76,23 @@ end
 f.SPELLS_CHANGED = f.ReconfTicker
 f:RegisterEvent("SPELLS_CHANGED")
 
+-- When you mount weapons disappear, but GetSheathState gets stuck at 2
+-- When you dismount it's still stuck if you dismount on the ground
+-- but if you're falling from the flying mount, then it's somehow fine
+function f:PLAYER_MOUNT_DISPLAY_CHANGED(event)
+    -- Checking if ground dismount and then forcing sheath to cycle
+    if not IsMounted() and not IsFlying() then
+        forceToggle = true
+    end
+end
+
 function f:Enable()
     -- self:RegisterEvent("PLAYER_ENTERING_WORLD")
     -- self:RegisterEvent("QUEST_ACCEPTED")
     -- self:RegisterEvent("QUEST_FINISHED")
     -- self:RegisterEvent("MERCHANT_CLOSED")
+    self:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
+    self:RegisterEvent("PLAYER_STARTED_MOVING")
     self:RegisterEvent("LOOT_CLOSED")
     if not ticker then
         ticker = C_Timer.NewTicker(5, unsheath)
@@ -86,7 +100,8 @@ function f:Enable()
 end
 
 function f:Disable()
-    -- self:UnregisterEvent("MERCHANT_CLOSED")
+    self:UnregisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
+    self:UnregisterEvent("PLAYER_STARTED_MOVING")
     self:UnregisterEvent("LOOT_CLOSED")
     if ticker then
         ticker:Cancel()
